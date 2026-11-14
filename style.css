@@ -31,10 +31,21 @@ main {
     position: absolute;
 
     .place-label > span {
+        position: relative;          /* anchor for the pseudo-element */
+        display: inline-block;
         font-size: 17px;
+        width: 200px;
+        text-align: center;
         color: #ffffff;
-        text-shadow: -2px -2px 0 #000000, 2px -2px 0 #000000, -2px 2px 0 #000000, 2px 2px 0 #000000;
+        z-index: 0;
 
+        &::before {
+            content: attr(data-shadow);
+            position: absolute;
+            inset: 0;                /* top/right/bottom/left: 0 */
+            z-index: -1;             /* sits behind the white text */
+            -webkit-text-stroke: 4px #000000;
+        }
     }
 }
 

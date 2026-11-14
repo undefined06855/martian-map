@@ -1,54 +1,38 @@
-import { LayerGroup, Marker, DivIcon } from "leaflet";
-
-const URL =
-    "https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/MARS_names/FeatureServer/0/query";
-const PAGE = 1000;
-const MAX_LABELS = 300;
-
-const escapeHtml = (s) =>
-    s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+import { LayerGroup, Marker, DivIcon, LeafletMap } from "leaflet";
+import { $ } from "./dt.js";
 
 export default class PlaceNames {
-    /**
-     * @param {{ exclude?: string[] }} [options] feature types to hide, e.g. ["Crater"]
-     */
-    constructor(options = {}) {
-        this.exclude = new Set(options.exclude ?? []);
+    constructor() {
         this.group = new LayerGroup();
+
+        /** @type {LeafletMap} */ // @ts-ignore
         this.map = null;
-        this._features = null;
-        this._loading = null;
-        this._refresh = this._refresh.bind(this);
+
+        /** @type {Array<any>} */
+        this.features = [];
     }
 
-    load() {
-        this._loading ??= this._load().catch((err) => {
-            this._loading = null;
-            throw err;
-        });
-        return this._loading;
-    }
+    async load() {
+        this.features = [];
+        for (let offset = 0; ; offset += 1000) {
+            const params = new URLSearchParams();
+            params.set("where", "1=1");
+            params.set("outFields", "name,type,diameter,center_lat,center_lon");
+            params.set("returnGeometry", "false");
+            params.set("orderByFields", "OBJECTID");
+            params.set("resultOffset", offset.toString());
+            params.set("resultRecordCount", "1000");
+            params.set("f", "json");
 
-    async _load() {
-        const features = [];
-        for (let offset = 0; ; offset += PAGE) {
-            const params = new URLSearchParams({
-                where: "1=1",
-                outFields: "name,type,diameter,center_lat,center_lon",
-                returnGeometry: "false",
-                orderByFields: "OBJECTID",
-                resultOffset: offset,
-                resultRecordCount: PAGE,
-                f: "json",
-            });
-            const res = await fetch(`${URL}?${params}`);
+            const res = await fetch(`${"https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/MARS_names/FeatureServer/0/query"}?${params}`);
             if (!res.ok) throw new Error(`HTTP ${res.status} fetching place names`);
             const data = await res.json();
             if (data.error) throw new Error(data.error.message);
 
-            for (const { attributes: a } of data.features) {
+            for (const feature of data.features) {
+                let a = feature.attributes;
                 if (!a.name || a.center_lat == null || a.center_lon == null) continue;
-                features.push({
+                this.features.push({
                     name: a.name,
                     type: a.type,
                     diameter: a.diameter ?? 0, // km
@@ -56,50 +40,47 @@ export default class PlaceNames {
                     lng: a.center_lon > 180 ? a.center_lon - 360 : a.center_lon,
                 });
             }
+
             if (!data.exceededTransferLimit) break;
         }
-        this._features = features;
     }
 
-    /** @param {import("leaflet").Map} map */
+    /**
+     * @param {LeafletMap} map
+     */
     async add(map) {
-        try {
-            await this.load();
-        } catch (err) {
-            console.error("Failed to load place names:", err);
-            return;
-        }
         this.map = map;
-        this.group.addTo(map);
-        map.on("moveend zoomend", this._refresh);
-        this._refresh();
+        this.group.addTo(this.map);
+        this.map.on("moveend zoomend", this.refresh);
+        this.refresh();
     }
 
     /** @param {import("leaflet").Map} map */
     remove(map) {
-        map.off("moveend zoomend", this._refresh);
+        map.off("moveend zoomend", this.refresh);
         this.group.clearLayers();
         map.removeLayer(this.group);
-        this.map = null;
     }
 
-    _refresh() {
-        if (!this.map || !this._features) return;
+    refresh() {
+        if (!this.map || !this.features) return;
         const minDiameter = 4000 / 2 ** this.map.getZoom(); // km; tune to taste
         const bounds = this.map.getBounds().pad(0.1);
 
         this.group.clearLayers();
         let shown = 0;
-        for (const f of this._features) {
-            if (shown >= MAX_LABELS) break;
-            if (this.exclude.has(f.type)) continue;
+        for (const f of this.features) {
+            if (shown >= 400) break;
             if (f.diameter < minDiameter) continue;
             if (!bounds.contains([f.lat, f.lng])) continue;
+
+            let html = $`span`(f.name);
+            html.setAttribute("data-shadow", f.name);
 
             new Marker([f.lat, f.lng], {
                 icon: new DivIcon({
                     className: "place-label",
-                    html: `<span>${escapeHtml(f.name)}</span>`,
+                    html,
                     iconSize: [0, 0],
                 }),
                 interactive: false,

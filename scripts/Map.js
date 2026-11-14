@@ -1,5 +1,6 @@
 import { EPSG4326, LayerGroup, LeafletMap } from "leaflet";
 import Layer from "./Layer.js";
+import PlaceNames from "./PlaceNames.js";
 
 export default class MartianMap {
     /**
@@ -46,5 +47,9 @@ export default class MartianMap {
         for (let layer of this.layers) {
             layers?.append(layer.generateHTML());
         }
+
+        let names = new PlaceNames();
+        await names.load();
+        names.add(this.map);
     }
 }
