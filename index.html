@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100..900&display=swap" rel="stylesheet" />
+
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.css" />
+        <script type="importmap">
+            {"imports": {"leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js"}}
+        </script>
+
+        <link rel="stylesheet" href="/style.css" />
+
+        <title>Martian Map</title>
+    </head>
+    <body>
+        <main>
+            <div id="ui">
+                <div class="top left" id="status">
+                    <div id="layer-info"></div>
+                    <div id="time-spent">00:00:00</div>
+                </div>
+                <div class="top right" id="mission">
+                    <span>Do crime</span>
+                    <span>Collect Mars Shit</span>
+                    <span>Breakdance</span>
+                    <span>Colonise</span>
+                    <span>Be Gay</span>
+                    <span>Don't die</span>
+                    <span>Cats?</span>
+                    <span>Alien Sex</span>
+                    <span>?????</span>
+                    <span>Win</span>
+                    <span>Don't get lost</span>
+                    <span>Profit</span>
+                </div>
+                <div class="bottom left" id="controls">
+                    <button>Zoom In</button>
+                    <button>Zoom Out</button>
+                </div>
+                <div class="bottom middle" id="scale-bar">
+                    <!-- ??? -->
+                </div>
+                <div class="bottom right" id="status-bar">
+
+                </div>
+            </div>
+            <canvas>Your browser does not support HTML canvas!</canvas>
+        </main>
+    </body>
+</html>
