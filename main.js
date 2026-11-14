@@ -1,9 +1,13 @@
-const server = Bun.serve({
+let server = Bun.serve({
     routes: {
+        "/api/"
+
         "/": Bun.file("public/index.html"),
-        "/style.css": Bun.file("public/style.css"),
-        "/leaflet.css": Bun.file("node_modules/leaflet/dist/leaflet.css"),
-        "/leaflet.js": Bun.file("node_modules/leaflet/dist/leaflet.js"),
+        "/*": async req => {
+            let file = Bun.file(`public/${new URL(req.url).pathname}`);
+            if (!(await file.exists())) return new Response("404 Not Found", { status: 404 });
+            return new Response(file);
+        },
     },
 
     port: process.env["PORT"],
