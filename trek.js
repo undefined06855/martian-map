@@ -6,6 +6,13 @@ class Style {
         // TODO: set stuff here
     }
 
+    /**
+     * Fetches the capabilities for a certain style and stores it.
+     */
+    async fetchCapabilities() {
+        // ...
+    }
+
     toJSON() {
         // TODO: this
     }
@@ -28,10 +35,10 @@ class Trek {
     }
 
     /**
-     * Returns the WMTS styles that this supports. This can be a hard-coded list in the server
+     * Returns the WMTS styles that this supports. This can be a hard-coded list in the server.
      * @returns {Array<Style>}
      */
-    getStyles() {
+    async getStyles() {
         return [];
     }
 
@@ -40,26 +47,23 @@ class Trek {
      * Note that URLs are only the path, e.g. /api/map/<style>/id, and returns them with the location of the bottom left
      * corner of that tile. Should calculate the zoom level and gets an appropriate image for the zoom level. Returns a
      * JSON object.
+     *
+     * It should save the image to the storage of the server in a data/ directory, with subfolders for each style name.
+     * Bun.serve will serve the files.
      * @param {Array<string>} styles
      * @param {string} from
      * @param {string} to
      * @returns {any}
      */
-    getTiles(styles, from, to) {
+    async getTiles(styles, from, to) {
         // ...
     }
 
     /**
-     * Fetches the capabilities for a certain style and stores it.
-     * @param {string} style
-     */
-    fetchCapabilities(style) {}
-
-    /**
-     * Fetches the tiles for a certain geographical region and stores them.
+     * Fetches the tiles for a certain geographical region  from the API and stores them.
      * @param {Array<Style>} styles
      * @param {string} from
      * @param {string} to
      */
-    fetchTiles(styles, from, to) {}
+    async fetchTiles(styles, from, to) {}
 }
