@@ -6,13 +6,30 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
         <link rel="stylesheet" href="/style.css" />
+        <link rel="stylesheet" href="/leaflet.css" />
 
         <title>Martian Map</title>
     </head>
     <body>
         <main>
-            <div id="ui"></div>
-            <canvas>Your browser does not support HTML canvas!</canvas>
+            <div id="map" aria-label="Map of Mars"></div>
         </main>
+        <script type="module">
+            import { Map, TileLayer } from "/leaflet.js";
+
+            const map = new Map("map", {
+                zoomControl: false,
+                dragging: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                pinchZoom: false,
+                boxZoom: false,
+                keyboard: false,
+            }).setView([0, 0], 2);
+
+            const heightMapUrl =
+                "https://trek.nasa.gov/tiles/Mars/EQ/Mars_MOLA_blend200ppx_HRSC_ClrShade_clon0dd_200mpp_lzw/1.0.0/default/default028mm/{z}/{y}/{x}.jpg";
+            new TileLayer(heightMapUrl).addTo(map);
+        </script>
     </body>
 </html>
