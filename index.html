@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <html lang="en">
     <head>
@@ -11,8 +11,14 @@
 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.css" />
         <script type="importmap">
-            {"imports": {"leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js"}}
+            { "imports": { "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js" } }
         </script>
+
+        <link rel="modulepreload" href="scripts/Layer.js" />
+        <link rel="modulepreload" href="scripts/Map.js" />
+        <link rel="modulepreload" href="scripts/layers.js" />
+        <link rel="modulepreload" href="scripts/dt.js" />
+        <script type="module" src="scripts/main.js"></script>
 
         <link rel="stylesheet" href="/style.css" />
 
@@ -20,8 +26,11 @@
     </head>
     <body>
         <main>
+            <div id="map"></div>
+
             <div id="ui">
                 <div class="top left" id="status">
+                    <!-- casualties: unknown -->
                     <div id="layer-info"></div>
                     <div id="time-spent">00:00:00</div>
                 </div>
@@ -40,17 +49,14 @@
                     <span>Profit</span>
                 </div>
                 <div class="bottom left" id="controls">
-                    <button>Zoom In</button>
-                    <button>Zoom Out</button>
+                    <button id="zoom-in"><img src="/assets/zoom_in.svg" class="invert" /></button>
+                    <button id="zoom-out"><img src="/assets/zoom_out.svg" class="invert" /></button>
                 </div>
                 <div class="bottom middle" id="scale-bar">
                     <!-- ??? -->
                 </div>
-                <div class="bottom right" id="status-bar">
-
-                </div>
+                <div class="bottom right" id="status-bar"></div>
             </div>
-            <canvas>Your browser does not support HTML canvas!</canvas>
         </main>
     </body>
 </html>

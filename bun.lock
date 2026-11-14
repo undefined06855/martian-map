@@ -1,0 +1,16 @@
+{
+  "lockfileVersion": 2,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "dependencies": {
+        "leaflet": "2.0.0-beta.4",
+      },
+    },
+  },
+  "packages": {
+    "@types/geojson": ["@types/geojson@7946.0.16", "", {}, "sha512-6C8nqWur3j98U6+lXDfTUWIfgvZU+EumvpHKcYjujKH7woYyLj2sUmff0tRhrqM7BohUw7Pz3ZB1jj2gW9Fvmg=="],
+
+    "leaflet": ["leaflet@2.0.0-beta.4", "", { "dependencies": { "@types/geojson": "^7946.0.16" } }, "sha512-l+3bBeiDgUYGCc4ZWbmjIxfog+dgtd7cdUIINgc1MQtRuWIzxmNM+GF6TL0tA1+/oTEe+4md/neywDfNeIQLlw=="],
+  }
+}

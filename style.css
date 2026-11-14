@@ -9,6 +9,7 @@ main {
     padding: 0px;
 
     height: 100%;
+    user-select: none;
 }
 
 main {
@@ -26,18 +27,41 @@ main {
     }
 }
 
+#map {
+    position: absolute;
+
+    .place-label > span {
+        font-size: 17px;
+        color: #ffffff;
+        text-shadow: -2px -2px 0 #000000, 2px -2px 0 #000000, -2px 2px 0 #000000, 2px 2px 0 #000000;
+
+    }
+}
+
 #ui {
     position: absolute;
 
+    pointer-events: none;
     > * {
         position: absolute;
     }
 
-    .bottom { bottom: 20px; }
-    .top { top: 20px; }
-    .left { left: 20px; }
-    .right { right: 20px; }
-    .middle { left: 50%; translate: -50% 0px; }
+    .bottom {
+        bottom: 20px;
+    }
+    .top {
+        top: 20px;
+    }
+    .left {
+        left: 20px;
+    }
+    .right {
+        right: 20px;
+    }
+    .middle {
+        left: 50%;
+        translate: -50% 0px;
+    }
 
     #status {
         display: flex;
@@ -45,10 +69,14 @@ main {
         gap: 20px;
 
         > #layer-info {
-            height: 100px;
             width: 200px;
+            padding: 10px;
 
-            background-color: #00000047;
+            background-color: #ffffff47;
+            pointer-events: all;
+
+            display: flex;
+            flex-direction: column;
         }
 
         > #time-spent {
@@ -61,11 +89,26 @@ main {
         display: flex;
         flex-direction: column;
         gap: 5px;
+
+        background-color: #ffffff47;
+        pointer-events: all;
+        padding: 10px;
     }
 
     #controls {
         display: flex;
         flex-direction: column;
+        pointer-events: all;
+        gap: 5px;
+
+        > button {
+            width: 60px;
+            height: 60px;
+
+            > img {
+                width: 90%;
+            }
+        }
     }
 
     #scale-bar {
@@ -75,6 +118,7 @@ main {
     }
 
     #status-bar {
-        
     }
 }
+
+.invert { filter: invert(1); }

@@ -1,0 +1,8 @@
+{
+    "dependencies": {
+        "leaflet": "2.0.0-beta.4"
+    },
+    "scripts": {
+        "format": "bunx prettier . --write"
+    }
+}

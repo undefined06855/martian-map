@@ -1,0 +1,50 @@
+import { EPSG4326, LayerGroup, LeafletMap } from "leaflet";
+import Layer from "./Layer.js";
+
+export default class MartianMap {
+    /**
+     * @param {Array<Layer>} layers
+     */
+    constructor(layers) {
+        this.layers = layers;
+
+        /** @type {LeafletMap} */ // @ts-ignore
+        this.map = null;
+    }
+
+    async load() {
+        await Promise.all(this.layers.map(layer => layer.load(this)));
+
+        let map = new LeafletMap("map", {
+            crs: EPSG4326,
+
+            zoomControl: false,
+            attributionControl: false,
+
+            dragging: true,
+            // touchZoom: true, // pinch to zoom
+            pinchZoom: true,
+            scrollWheelZoom: true,
+            doubleClickZoom: true,
+            boxZoom: true, // shift+drag
+            keyboard: true,
+
+            center: [0, 0],
+            zoom: 2,
+            minZoom: 1,
+            maxBounds: [
+                [-90, -180],
+                [90, 180],
+            ],
+            maxBoundsViscosity: 1.0,
+        }).setView([51.505, -0.09], 2);
+
+        // this.layers.forEach(layer => layer.add(map));
+        this.map = map;
+
+        let layers = document.querySelector("#layer-info");
+        for (let layer of this.layers) {
+            layers?.append(layer.generateHTML());
+        }
+    }
+}
