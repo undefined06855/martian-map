@@ -12,7 +12,9 @@ export default class Timer {
             this.interval = null;
         } else {
             this.tick();
-            this.interval = setInterval(() => { this.tick() }, 1000);
+            this.interval = setInterval(() => {
+                this.tick();
+            }, 1000);
         }
     }
 

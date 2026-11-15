@@ -61,21 +61,21 @@ export default class Trail {
             interactive: false,
             keyboard: false,
             icon: this.keypointIcon,
-            zIndexOffset: 99
+            zIndexOffset: 99,
         }).addTo(map);
 
         new Marker([pointB.lat, pointB.lon], {
             interactive: false,
             keyboard: false,
             icon: this.keypointIcon,
-            zIndexOffset: 99
+            zIndexOffset: 99,
         }).addTo(map);
 
-        new Marker([ -25.2026, 40.45166 ], {
+        new Marker([-25.2026, 40.45166], {
             interactive: false,
             keyboard: false,
             icon: this.arrow,
-            zIndexOffset: 200
+            zIndexOffset: 200,
         }).addTo(map);
     }
 }
