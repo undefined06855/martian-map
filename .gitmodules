@@ -1,0 +1,3 @@
+[submodule "pathalgorithm"]
+	path = pathalgorithm
+	url = https://github.com/PastyRat/pathalgorithm.git
