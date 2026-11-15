@@ -1,3 +1,4 @@
+import { earthTimeToJulianDate, earthTimeToMarsTime, formatMarsTime } from "./converet.js";
 import { MARS_LAYERS } from "./layers.js";
 import MartianMap from "./Map.js";
 import Timer from "./Timer.js";
@@ -25,3 +26,12 @@ document.querySelector("#time-spent")?.addEventListener("click", () => {
 document.querySelector("#time-spent")?.addEventListener("dblclick", () => {
     timer.reset();
 });
+
+
+function updateTime() {
+    // @ts-ignore
+    document.querySelector("#time").innerHTML = formatMarsTime(earthTimeToMarsTime(new Date()));
+    requestAnimationFrame(updateTime);
+}
+
+updateTime();

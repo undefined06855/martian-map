@@ -146,6 +146,12 @@ main {
         width: 30%;
         background-color: purple;
     }
+
+    #scale-bar-better {
+        height: 60%;
+        width: 60px;
+        background-color: black;
+    }
 }
 
 .invert {

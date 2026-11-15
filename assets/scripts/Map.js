@@ -1,4 +1,4 @@
-import { EPSG4326, LayerGroup, LeafletMap } from "leaflet";
+import { EPSG4326, LayerGroup, LeafletMap, ScaleControl } from "leaflet";
 import Layer from "./Layer.js";
 import PlaceNames from "./PlaceNames.js";
 
@@ -33,12 +33,18 @@ export default class MartianMap {
             center: [0, 0],
             zoom: 2,
             minZoom: 1,
+            zoomSnap: 0,
             maxBounds: [
                 [-90, -180],
                 [90, 180],
             ],
             maxBoundsViscosity: 1.0,
         }).setView([-17.6, 50.82], 5);
+
+        new ScaleControl({
+            position: "bottomright",
+            maxWidth: 300,
+        }).addTo(map);
 
         // this.layers.forEach(layer => layer.add(map));
         this.map = map;
