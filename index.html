@@ -14,6 +14,7 @@
             { "imports": { "leaflet": "https://cdn.jsdelivr.net/npm/leaflet@2.0.0-beta.4/dist/leaflet.js" } }
         </script>
 
+        <link rel="modulepreload" href="scripts/Timer.js" />
         <link rel="modulepreload" href="scripts/Layer.js" />
         <link rel="modulepreload" href="scripts/Map.js" />
         <link rel="modulepreload" href="scripts/layers.js" />
@@ -32,7 +33,7 @@
                 <div class="top left" id="status">
                     <!-- casualties: unknown -->
                     <div id="layer-info"></div>
-                    <div id="time-spent">00:00:00</div>
+                    <div id="time-spent" class="has-shadow" data-shadow="00:00:00">00:00:00</div>
                 </div>
                 <div class="top right" id="mission">
                     <span>Do crime</span>

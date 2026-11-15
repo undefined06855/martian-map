@@ -24,7 +24,9 @@ export default class PlaceNames {
             params.set("resultRecordCount", "1000");
             params.set("f", "json");
 
-            const res = await fetch(`${"https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/MARS_names/FeatureServer/0/query"}?${params}`);
+            const res = await fetch(
+                `${"https://services.arcgis.com/V6ZHFr6zdgNZuVG0/ArcGIS/rest/services/MARS_names/FeatureServer/0/query"}?${params}`,
+            );
             if (!res.ok) throw new Error(`HTTP ${res.status} fetching place names`);
             const data = await res.json();
             if (data.error) throw new Error(data.error.message);
@@ -55,7 +57,9 @@ export default class PlaceNames {
         this.refresh();
     }
 
-    /** @param {import("leaflet").Map} map */
+    /**
+     * @param {LeafletMap} map
+     */
     remove(map) {
         map.off("moveend zoomend", this.refresh);
         this.group.clearLayers();
@@ -64,7 +68,7 @@ export default class PlaceNames {
 
     refresh() {
         if (!this.map || !this.features) return;
-        const minDiameter = 4000 / 2 ** this.map.getZoom(); // km; tune to taste
+        const minDiameter = 4000 / 2 ** this.map.getZoom();
         const bounds = this.map.getBounds().pad(0.1);
 
         this.group.clearLayers();
@@ -76,6 +80,7 @@ export default class PlaceNames {
 
             let html = $`span`(f.name);
             html.setAttribute("data-shadow", f.name);
+            html.setAttribute("class", "has-shadow");
 
             new Marker([f.lat, f.lng], {
                 icon: new DivIcon({

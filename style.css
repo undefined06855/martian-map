@@ -31,21 +31,10 @@ main {
     position: absolute;
 
     .place-label > span {
-        position: relative;          /* anchor for the pseudo-element */
-        display: inline-block;
         font-size: 17px;
         width: 200px;
         text-align: center;
-        color: #ffffff;
-        z-index: 0;
-
-        &::before {
-            content: attr(data-shadow);
-            position: absolute;
-            inset: 0;                /* top/right/bottom/left: 0 */
-            z-index: -1;             /* sits behind the white text */
-            -webkit-text-stroke: 4px #000000;
-        }
+        translate: -50% -50%;
     }
 }
 
@@ -79,15 +68,18 @@ main {
         flex-direction: row;
         gap: 20px;
 
+        pointer-events: all;
+
         > #layer-info {
             width: 200px;
             padding: 10px;
 
-            background-color: #ffffff47;
-            pointer-events: all;
+            background-color: #ffffffa4;
 
             display: flex;
             flex-direction: column;
+
+            @media (max-width: 900px) { gap: 20px; }
         }
 
         > #time-spent {
@@ -101,7 +93,7 @@ main {
         flex-direction: column;
         gap: 5px;
 
-        background-color: #ffffff47;
+        background-color: #ffffffa4;
         pointer-events: all;
         padding: 10px;
     }
@@ -111,6 +103,8 @@ main {
         flex-direction: column;
         pointer-events: all;
         gap: 5px;
+
+        @media (max-width: 900px) { gap: 20px; }
 
         > button {
             width: 60px;
@@ -127,9 +121,23 @@ main {
         background-color: red;
         height: 50px;
     }
-
-    #status-bar {
-    }
 }
 
-.invert { filter: invert(1); }
+.invert {
+    filter: invert(1);
+}
+
+.has-shadow {
+    position: relative;
+    display: inline-block;
+    color: #ffffff;
+    z-index: 0;
+
+    &::before {
+        content: attr(data-shadow);
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        -webkit-text-stroke: 4px #000000;
+    }
+}

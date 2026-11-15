@@ -77,7 +77,7 @@ export default class Layer {
             maxZoom: maxNativeZoom + 5,
             maxNativeZoom,
             zoomOffset: -firstZoom,
-            noWrap: true,   
+            noWrap: true,
             attribution: "",
             errorTileUrl: "/assets/no_image.png",
             bounds,
