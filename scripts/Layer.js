@@ -91,7 +91,7 @@ export default class Layer {
             this.map.layers.forEach(layer => this.map.map.removeLayer(layer.tileLayer));
             this.map.map.addLayer(this.tileLayer);
         });
-
+ 
         let label = $`label`(this.label);
         label.setAttribute("for", id);
 

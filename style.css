@@ -116,10 +116,30 @@ main {
         }
     }
 
-    #scale-bar {
+    #scale-bar, #scale-bar-2 {
         width: 40%;
         background-color: red;
         height: 50px;
+
+        color: white;
+        font-size: 30px;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        padding: 0px 10px;
+
+        > span {
+            text-align: right;
+            flex: 1 1 auto;
+        }
+    }
+
+    #scale-bar-2 {
+        width: 30%;
+        background-color: purple;
     }
 }
 

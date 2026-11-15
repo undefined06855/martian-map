@@ -38,7 +38,7 @@ export default class MartianMap {
                 [90, 180],
             ],
             maxBoundsViscosity: 1.0,
-        }).setView([51.505, -0.09], 2);
+        }).setView([-17.6, 50.82], 5);
 
         // this.layers.forEach(layer => layer.add(map));
         this.map = map;

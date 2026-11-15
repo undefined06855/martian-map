@@ -24,13 +24,18 @@ export default class Trail {
         this.map = null;
 
         this.icon = new Icon({
-            iconUrl: "assets/pin.png",
+            iconUrl: "assets/output.png",
             iconSize: [5, 5],
         });
 
         this.keypointIcon = new Icon({
-            iconUrl: "assets/pin-blue.png",
-            iconSize: [15, 15],
+            iconUrl: "assets/output2.png",
+            iconSize: [25, 25],
+        });
+
+        this.arrow = new Icon({
+            iconUrl: "assets/arrow.png",
+            iconSize: [55, 55],
         });
     }
 
@@ -56,12 +61,21 @@ export default class Trail {
             interactive: false,
             keyboard: false,
             icon: this.keypointIcon,
+            zIndexOffset: 99
         }).addTo(map);
 
         new Marker([pointB.lat, pointB.lon], {
             interactive: false,
             keyboard: false,
             icon: this.keypointIcon,
+            zIndexOffset: 99
+        }).addTo(map);
+
+        new Marker([ -25.2026, 40.45166 ], {
+            interactive: false,
+            keyboard: false,
+            icon: this.arrow,
+            zIndexOffset: 200
         }).addTo(map);
     }
 }
